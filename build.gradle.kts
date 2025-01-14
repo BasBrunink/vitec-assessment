@@ -5,6 +5,7 @@ val exposed_version: String by project
 val postgres_version: String by project
 val dotenv_version: String by project
 val koin_version: String by project
+val jbcrypt_version: String by project
 
 plugins {
     kotlin("jvm") version "1.9.22"
@@ -45,6 +46,7 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:$logback_version")
     implementation("io.insert-koin:koin-ktor:$koin_version")
     implementation("io.insert-koin:koin-logger-slf4j:$koin_version")
+    implementation("org.mindrot:jbcrypt:$jbcrypt_version")
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
 }
