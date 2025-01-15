@@ -20,7 +20,6 @@ data class AllUserResponse(val users:List<User>, val total: Int)
 
 fun Route.user() {
 
-    val logger = KtorSimpleLogger("debug")
     val repository: UserRepository by inject()
     // Add your routes here
 
@@ -29,11 +28,9 @@ fun Route.user() {
             val query = call.parameters["query"]
             val limit = call.parameters["limit"]?.toIntOrNull()
 
-            logger.error("Limit: $limit, Query: $query")
             when {
                 // Both query and limit are provided
                 query != null && limit != null -> {
-                    logger.error("query and limit")
                     val filteredUsers = repository.allUsers().filter { it.name.contains(query) }
                     val limitedUsers = filteredUsers.take(limit)
                     call.respond(AllUserResponse(limitedUsers, limitedUsers.size))
@@ -41,7 +38,6 @@ fun Route.user() {
 
                 // Only query is provided
                 query != null -> {
-                    logger.error("only query")
                     val filteredUsers = repository.allUsers().filter { it.name.contains(query) }
                     call.respond(AllUserResponse(filteredUsers, filteredUsers.size))
                 }
@@ -52,7 +48,6 @@ fun Route.user() {
 
                 // Neither query nor limit is provided
                 else -> {
-                    logger.error("nothing")
                     val allUsers = repository.allUsers()
                     call.respond(AllUserResponse(allUsers, allUsers.size))
                 }
@@ -62,7 +57,6 @@ fun Route.user() {
             try {
                 val request = call.receive<User>()
                 val users = repository.allUsers()
-                logger.error(users.toString())
                 if(users.any{it.email == request.email}) {
                     call.respond(HttpStatusCode.BadRequest,ErrorResponse("Duplicate e-mail: ${request.email}"))
                 }

@@ -11,7 +11,7 @@ import org.koin.core.context.startKoin
 import org.koin.environmentProperties
 
 fun main() {
-    embeddedServer(CIO, port = 8088, host = "0.0.0.0", module = Application::module)
+    embeddedServer(CIO, port = 9000, host = "0.0.0.0", module = Application::module)
         .start(wait = true)
 }
 
