@@ -29,35 +29,39 @@ fun Route.user() {
             val query = call.parameters["query"]
             val limit = call.parameters["limit"]?.toIntOrNull()
 
-            logger.error("Limit: $limit, Query: $query")
-            when {
-                // Both query and limit are provided
-                query != null && limit != null -> {
-                    logger.error("query and limit")
-                    val filteredUsers = repository.allUsers().filter { it.name.contains(query) }
-                    val limitedUsers = filteredUsers.take(limit)
-                    call.respond(AllUserResponse(limitedUsers, limitedUsers.size))
-                }
-
-                // Only query is provided
-                query != null -> {
-                    logger.error("only query")
-                    val filteredUsers = repository.allUsers().filter { it.name.contains(query) }
-                    call.respond(AllUserResponse(filteredUsers, filteredUsers.size))
-                }
-                limit != null -> {
-                    val limitedUsers = repository.allUsers().take(limit)
-                    call.respond(AllUserResponse(limitedUsers, limitedUsers.size))
-                }
-
-                // Neither query nor limit is provided
-                else -> {
-                    logger.error("nothing")
-                    val allUsers = repository.allUsers()
-                    call.respond(AllUserResponse(allUsers, allUsers.size))
-                }
-            }
+            val users = repository.allUsers("L", 10)
+            call.respond(AllUserResponse(users, 10))
         }
+//
+//            logger.error("Limit: $limit, Query: $query")
+//            when {
+//                // Both query and limit are provided
+//                query != null && limit != null -> {
+//                    logger.error("query and limit")
+//                    val filteredUsers = repository.allUsers().filter { it.name.contains(query) }
+//                    val limitedUsers = filteredUsers.take(limit)
+//                    call.respond(AllUserResponse(limitedUsers, limitedUsers.size))
+//                }
+//
+//                // Only query is provided
+//                query != null -> {
+//                    logger.error("only query")
+//                    val filteredUsers = repository.allUsers().filter { it.name.contains(query) }
+//                    call.respond(AllUserResponse(filteredUsers, filteredUsers.size))
+//                }
+//                limit != null -> {
+//                    val limitedUsers = repository.allUsers().take(limit)
+//                    call.respond(AllUserResponse(limitedUsers, limitedUsers.size))
+//                }
+//
+//                // Neither query nor limit is provided
+//                else -> {
+//                    logger.error("nothing")
+//                    val allUsers = repository.allUsers()
+//                    call.respond(AllUserResponse(allUsers, allUsers.size))
+//                }
+//            }
+//        }
         post() {
             try {
                 val request = call.receive<User>()
