@@ -1,3 +1,8 @@
+# Notes
+Ik ben een heel eind gekomen, maar liep tegen het feit aan dat ik niet kon connecten met de database, en dus geen queries en dergelijk kon uitvoeren.
+
+Ik denk als ik iets langer dedicated met Kotlin en Ktor werk ik hier wel mee uit de voeten kom.
+
 # Ktor Starter project
 
 This is the Vitec Memorix Ktor starter project. This project is meant as a starting point for small projects and coding assignments.
